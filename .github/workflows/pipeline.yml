@@ -1,0 +1,32 @@
+name: Tourism Project Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-mlops-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository Codebase
+        uses: actions/checkout@v3
+
+      - name: Initialize Python Runtime Environment
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Project Dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Orchestrate Complete End-to-End ML System Pipeline
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python model_building/data_register.py
+          python model_building/prep.py
+          python model_building/train.py
+          python hosting/hosting.py
