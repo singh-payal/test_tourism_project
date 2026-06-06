@@ -94,8 +94,7 @@ with mlflow.start_run():
 
     # Log parameter sets
     results = grid_search.cv_results_
-    print(f"
-Evaluated {len(results['params'])} parameter combinations")
+    print(f"Evaluated {len(results['params'])} parameter combinations")
 
     for i in range(len(results['params'])):
         param_set = results['params'][i]
@@ -106,14 +105,12 @@ Evaluated {len(results['params'])} parameter combinations")
             mlflow.log_metric("mean_roc_auc", mean_score)
 
     # Best model
-    print(f"
-Best parameters: {grid_search.best_params_}")
+    print(f"Best parameters: {grid_search.best_params_}")
     mlflow.log_params(grid_search.best_params_)
     best_model = grid_search.best_estimator_
 
     # Predictions
-    print("
-Making predictions...")
+    print("Making predictions...")
     y_pred_train = best_model.predict(Xtrain)
     y_pred_test = best_model.predict(Xtest)
 
@@ -122,8 +119,7 @@ Making predictions...")
     y_pred_test_proba = best_model.predict_proba(Xtest)[:, 1]
 
     # Calculate metrics
-    print("
-Calculating metrics...")
+    print("Calculating metrics...")
     train_accuracy = accuracy_score(ytrain, y_pred_train)
     test_accuracy = accuracy_score(ytest, y_pred_test)
 
@@ -154,8 +150,7 @@ Calculating metrics...")
     })
 
     # Print results
-    print("
-" + "="*50)
+    print("" + "="*50)
     print("MODEL PERFORMANCE METRICS")
     print("="*50)
     print(f"Train Accuracy: {train_accuracy:.4f} | Test Accuracy: {test_accuracy:.4f}")
@@ -165,19 +160,16 @@ Calculating metrics...")
     print(f"Train ROC-AUC: {train_roc_auc:.4f} | Test ROC-AUC: {test_roc_auc:.4f}")
     print("="*50)
 
-    print("
-Test Set Classification Report:")
+    print("Test Set Classification Report:")
     print(classification_report(ytest, y_pred_test, target_names=['No Purchase', 'Purchase']))
 
-    print("
-Test Set Confusion Matrix:")
+    print("Test Set Confusion Matrix:")
     print(confusion_matrix(ytest, y_pred_test))
 
     # Save the model locally
     model_path = "top_tourism_model_v1.joblib"
     joblib.dump(best_model, model_path)
-    print(f"
-Model saved locally as: {model_path}")
+    print(f"Model saved locally as: {model_path}")
 
     # Log the model artifact
     mlflow.log_artifact(model_path, artifact_path="model")
@@ -190,11 +182,9 @@ Model saved locally as: {model_path}")
     # Step 1: Check if the repository exists
     try:
         api.repo_info(repo_id=repo_id, repo_type=repo_type)
-        print(f"
-Repository '{repo_id}' already exists. Using it.")
+        print(f"Repository '{repo_id}' already exists. Using it.")
     except RepositoryNotFoundError:
-        print(f"
-Repository '{repo_id}' not found. Creating new repository...")
+        print(f"Repository '{repo_id}' not found. Creating new repository...")
         create_repo(repo_id=repo_id, repo_type=repo_type, private=False)
         print(f"Repository '{repo_id}' created.")
 
@@ -207,7 +197,6 @@ Repository '{repo_id}' not found. Creating new repository...")
     )
     print(f"Model uploaded to Hugging Face: {repo_id}")
 
-print("
-" + "="*50)
+print("" + "="*50)
 print("MODEL TRAINING COMPLETED SUCCESSFULLY!")
 print("="*50)
