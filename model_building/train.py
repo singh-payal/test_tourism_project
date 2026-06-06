@@ -77,8 +77,7 @@ param_grid = {
 # Pipeline
 model_pipeline = make_pipeline(preprocessor, xgb_model)
 
-print("
-Starting MLflow experiment...")
+print("Starting MLflow experiment...")
 with mlflow.start_run():
     print("Performing Grid Search with Cross-Validation...")
     # Grid Search
