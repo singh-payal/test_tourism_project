@@ -73,8 +73,24 @@ if st.button("Run Purchase Prediction", use_container_width=True):
     if model is not None:
         prediction = model.predict(input_data)[0]
         prediction_proba = model.predict_proba(input_data)[0]
-        
+        st.markdown("### 📊 Prediction Result")
         if prediction == 1:
-            st.success(f"🎯 High Probability of Purchase! (Confidence: {prediction_proba[1]*100:.2f}%)")
+          st.markdown(
+              f'<div class="prediction-box success-box">'
+              f'<h2 style="color: #155724;">🎯 High Likelihood of Purchase!</h2>'
+              f'<p style="font-size: 18px; color: #155724;">This customer is <b>likely to purchase</b> the Wellness Tourism Package.</p>'
+              f'<p style="font-size: 16px; color: #155724;">Confidence: <b>{prediction_proba[1]*100:.2f}%</b></p>'
+              f'</div>',
+              unsafe_allow_html=True
+              )
+          st.success("💡 **Recommendation:** Prioritize follow-up with this customer!")
         else:
-            st.warning(f"⚠️ Customer Unlikely to Purchase. (Confidence: {prediction_proba[0]*100:.2f}%)")
+          st.markdown(
+              f'<div class="prediction-box warning-box">'
+              f'<h2 style="color: #856404;">⚠️ Low Likelihood of Purchase</h2>'
+              f'<p style="font-size: 18px; color: #856404;">This customer is <b>unlikely to purchase</b> the Wellness Tourism Package.</p>'
+              f'<p style="font-size: 16px; color: #856404;">Confidence: <b>{prediction_proba[0]*100:.2f}%</b></p>'
+              f'</div>',
+              unsafe_allow_html=True
+              )
+          st.info("💡 **Recommendation:** Consider alternative packages or additional engagement strategies.")
