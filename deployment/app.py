@@ -94,3 +94,9 @@ if st.button("Run Purchase Prediction", use_container_width=True):
               unsafe_allow_html=True
               )
           st.info("💡 **Recommendation:** Consider alternative packages or additional engagement strategies.")
+        
+        col_prob1, col_prob2 = st.columns(2)
+        with col_prob1:
+          st.metric("Probability of No Purchase", f"{prediction_proba[0]*100:.2f}%")
+        with col_prob2:
+          st.metric("Probability of Purchase", f"{prediction_proba[1]*100:.2f}%") 
